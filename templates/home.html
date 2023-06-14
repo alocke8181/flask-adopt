@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+{%block content%}
+<section>
+    {%for pet in pets%}
+    <div>
+        <div>
+            <img src="{{pet.photo_url}}">
+        </div>
+        <a href="/pets/{{pet.id}}">{{pet.name}}</a> is {%if pet.available%}available{%else%}not available{%endif%}
+    </div>
+    {%endfor%}
+</section>
+<a href="/add">Add Pet</a>
+{%endblock%}
