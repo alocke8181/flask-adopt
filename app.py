@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Pet
-from forms import New_Pet
+from forms import New_Pet, Edit_Pet
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField, BooleanField
@@ -28,7 +28,30 @@ def home():
 def add_pet():
     form = New_Pet()
     if form.validate_on_submit():
+        name = form.name.data
+        species = form.species.data
+        photo_url = form.photo_url.data
+        age = form.age.data
+        notes = form.notes.data
+        new_pet = Pet(name=name, species=species, photo_url=photo_url, age=age, notes=notes)
+        with app.app_context():
+            db.session.add(new_pet)
+            db.session.commit()
         return redirect('/')
 
     else:
         return render_template('add_pet.html', form=form)
+
+@app.route('/<int:pet_id>', methods=['GET','POST'])
+def pet_details(pet_id):
+    pet = Pet.query.get(pet_id)
+    form = Edit_Pet(obj=pet)
+    if form.validate_on_submit():
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+        db.session.add(pet)
+        db.session.commit()
+        return redirect(f'/{pet.id}') 
+    else:
+        return render_template('pet_details.html', pet=pet, form=form)

@@ -4,9 +4,9 @@
     {%for pet in pets%}
     <div>
         <div>
-            <img src="{{pet.photo_url}}">
+            <img src="{{pet.photo_url}}" style="width: 200px; height: 200px;">
         </div>
-        <a href="/pets/{{pet.id}}">{{pet.name}}</a> is {%if pet.available%}available{%else%}not available{%endif%}
+        <a href="/{{pet.id}}">{{pet.name}}</a> is {%if pet.available%}available{%else%}not available{%endif%}
     </div>
     {%endfor%}
 </section>
