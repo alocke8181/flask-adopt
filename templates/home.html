@@ -1,14 +1,15 @@
 {%extends 'base.html'%}
 {%block content%}
 <section>
-    {%for pet in pets%}
-    <div>
+    {% for pet in pets %}
+    <div class="pet-box">
         <div>
-            <img src="{{pet.photo_url}}" style="width: 200px; height: 200px;">
+            <img src="{{pet.photo_url}}" class="{% if pet.available %}available{% else %}not-available{% endif %}">
         </div>
-        <a href="/{{pet.id}}">{{pet.name}}</a> is {%if pet.available%}available{%else%}not available{%endif%}
+        <a href="/{{pet.id}}">{{pet.name}}</a> is {% if pet.available %}available{% else %}not available{% endif %}
     </div>
-    {%endfor%}
+    {% endfor %}
 </section>
-<a href="/add">Add Pet</a>
+<br>
+<a href="/add"><button type="button">Add Pet</button></a>
 {%endblock%}

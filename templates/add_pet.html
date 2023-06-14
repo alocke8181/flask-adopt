@@ -3,16 +3,18 @@
 <form id="add-pet-form" method="POST">
     {{form.hidden_tag()}}
     {% for field in form if field.widget.input_type != 'hidden' %}
+        <!--This prevents the 'Available' input from being displayed
+            All new pets are always available by default-->
         {% if field.name != 'available' %}
         <p>
             {{ field.label }}
             {{ field }}
             {% for error in field.errors %}
                 {{ error }}
-            {%endfor%}
+            {% endfor %}
         </p>
-        {%endif%}
-    {%endfor%}
+        {% endif %}
+    {% endfor %}
     <button type="submit">Add Pet</button>
 </form>
 
